@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.sk.pda.parts.want.WantGoodsListActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="right"
+        android:paddingTop="5dp">
+
+        <Button
+            android:id="@+id/want_hot_list_select_all"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@color/colorPrimaryLight"
+            android:text="全选"
+            android:textColor="@color/colorBackground"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/want_hot_list_add"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@color/colorPrimaryLight"
+            android:text="批量添加"
+            android:textColor="@color/colorBackground"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#696969" />
+
+    <include layout="@layout/fragment_want_hot_list" />
+</LinearLayout>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/want_ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@color/colorBackground">
+
+        <LinearLayout
+            android:layout_width="60dp"
+            android:layout_height="100dp"
+            android:background="@color/colorBackground"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/want_iv_right"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/new_img_loading_2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/want_tv_right_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="这里是产品名称"
+                android:textColor="#000000"
+                android:textSize="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="15dp"
+                    android:text="条码"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/want_tv_right_no"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:text="1010101010011"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="15dp"
+                    android:text="代码"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/want_tv_right_id"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:text="1111111"
+                    android:textSize="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="15dp"
+                    android:text="库存"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/want_tv_right_max"
+                    android:layout_width="69dp"
+                    android:layout_height="15dp"
+                    android:text="当前库存"
+                    android:textSize="10dp" />
+
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="15dp"
+                    android:text="起订量"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/want_tv_right_min"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:text="最小包装数"
+                    android:textSize="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="15dp"
+                    android:text="价格"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/want_tv_right_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="这里是价格"
+                    android:textSize="10dp" />
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="10dp"
+                    android:text="规格"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/want_tv_right_spec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="规格"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="10dp"
+                    android:text="单位"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/want_tv_right_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="单位"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/want_tv_item_numSub"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:background="@drawable/border"
+                    android:text="-"
+                    android:textColor="@color/colorAttion"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/want_et_item_num"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="20"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/want_tv_item_numAdd"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:background="@drawable/border"
+                    android:text="+"
+                    android:textColor="@color/colorAttion"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/want_tv_item_delProduct"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="3dp"
+                    android:text="删除"
+                    android:textColor="@color/colorAttion"
+                    android:textSize="10dp" />
+                <TextView
+                    android:id="@+id/want_tv_item_confirmProduct"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:background="@drawable/border"
+                    android:text="修改"
+                    android:textColor="@color/colorAttion"
+                    android:textSize="10dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

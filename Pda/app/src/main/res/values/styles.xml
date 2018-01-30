@@ -1,0 +1,80 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="MainButtonStyle">
+        <!-- Customize your theme here. -->
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <!--   <item name="android:drawablePadding">3dp</item>-->
+        <item name="android:textColor">@drawable/bottom_button_text_selector</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--  这个是加入的代码 -->
+    <style name="mypopwindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popshow_anim</item>
+        <!-- 指定显示的动画xml -->
+
+        <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">@color/colorSk</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@color/contents_text</item>
+        <!-- Used for the background -->
+        <item name="android:background">@color/colorDefault</item>
+    </style>
+
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorText</item>
+        <item name="colorControlActivated">@color/colorSk</item>
+    </style>
+
+<!--popwindow-->
+    <style name="popp_anim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/anim_popup_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_popup_out</item>
+    </style>
+
+    <style name="text_popup_not_interest">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginBottom">8dp</item>
+    <item name="android:layout_marginLeft">8dp</item>
+    <item name="android:layout_marginRight">8dp</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:background">@drawable/selector_popupwindow_text_bg</item>
+    <item name="android:clickable">true</item>
+    <item name="android:gravity">center</item>
+    <item name="android:padding">8dp</item>
+    <item name="android:textSize">@dimen/text_small</item>
+    <item name="android:textColor">@drawable/selector_popupwindow_text_color</item>
+    </style>
+
+
+</resources>

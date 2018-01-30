@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/tvname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="数量：" />
+
+    <EditText
+        android:id="@+id/etnum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="100dip" />
+
+    <TextView
+        android:id="@+id/tvunit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="单位" />
+
+</LinearLayout>

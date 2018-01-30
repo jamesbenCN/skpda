@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="订货时间"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/item_want_order_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="订货时间"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:text="到货时间"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/item_want_order_need_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="到货时间"
+                android:textSize="12dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="订货状态"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/item_want_order_is_order"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="已订货"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="数据库名称"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/item_want_order_db_name"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            android:text="数据库名称"
+            android:textSize="12dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_want_order_look"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="查看"
+                android:textColor="@color/colorDefault" />
+
+            <TextView
+                android:id="@+id/item_want_order_del"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@color/colorAttion"
+                android:gravity="center"
+                android:text="删除"
+                android:textColor="@color/colorDefault" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary" />
+
+</LinearLayout>

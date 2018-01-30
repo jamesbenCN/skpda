@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/empty_cart_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffefebe7">
+
+    <RelativeLayout
+        android:id="@+id/top_relative"
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="10.0dip"
+            android:singleLine="true"
+            android:text="设置"
+            android:textColor="@color/colorDefault"
+            android:textSize="15dp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_relative"
+        android:fadingEdge="none">
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:id="@+id/MorePageTableLayout_Follow"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="1.0dip"
+                android:shrinkColumns="0"
+                android:stretchColumns="0">
+
+                <TableRow
+                    android:id="@+id/testBtn"
+                    android:layout_width="fill_parent"
+                    android:layout_marginLeft="2.0dip"
+                    android:layout_marginRight="2.0dip"
+                    android:paddingBottom="16.0dip"
+                    android:paddingTop="16.0dip">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:drawablePadding="10.0dip"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="17.0dip"
+                        android:text="测试窗口"
+                        android:textColor="#ff333333"
+                        android:textSize="16.0sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20.0dip"
+                        android:src="@drawable/ic_arrow" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/lookTerminalBtn"
+                    android:layout_width="fill_parent"
+                    android:layout_marginLeft="2.0dip"
+                    android:layout_marginRight="2.0dip"
+                    android:paddingBottom="16.0dip"
+                    android:paddingTop="16.0dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:drawablePadding="10.0dip"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="17.0dip"
+                        android:text="查看终端号"
+                        android:textColor="#ff333333"
+                        android:textSize="16.0sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20.0dip"
+                        android:src="@drawable/ic_arrow" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/lookPermissionBtn"
+                    android:layout_width="fill_parent"
+                    android:layout_marginLeft="2.0dip"
+                    android:layout_marginRight="2.0dip"
+                    android:paddingBottom="16.0dip"
+                    android:paddingTop="16.0dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:drawablePadding="10.0dip"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="17.0dip"
+                        android:text="查看应用权限"
+                        android:textColor="#ff333333"
+                        android:textSize="16.0sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20.0dip"
+                        android:src="@drawable/ic_arrow" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/netConfigBtn"
+                    android:layout_width="fill_parent"
+                    android:layout_marginLeft="2.0dip"
+                    android:layout_marginRight="2.0dip"
+                    android:paddingBottom="16.0dip"
+                    android:paddingTop="16.0dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:drawablePadding="10.0dip"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="17.0dip"
+                        android:text="网络功能测试"
+                        android:textColor="#ff333333"
+                        android:textSize="16.0sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20.0dip"
+                        android:src="@drawable/ic_arrow" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/getDBBtn"
+                    android:layout_width="fill_parent"
+                    android:layout_marginLeft="2.0dip"
+                    android:layout_marginRight="2.0dip"
+                    android:paddingBottom="16.0dip"
+                    android:paddingTop="16.0dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:drawablePadding="10.0dip"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="17.0dip"
+                        android:text="升级通配数据库"
+                        android:textColor="#ff333333"
+                        android:textSize="16.0sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20.0dip"
+                        android:src="@drawable/ic_arrow" />
+                </TableRow>
+
+
+                <TableRow
+                    android:id="@+id/cleanCacheBtn"
+                    android:layout_width="fill_parent"
+                    android:layout_marginLeft="2.0dip"
+                    android:layout_marginRight="2.0dip"
+                    android:paddingBottom="16.0dip"
+                    android:paddingTop="16.0dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:drawablePadding="10.0dip"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="17.0dip"
+                        android:text="清除缓存"
+                        android:textColor="#ff333333"
+                        android:textSize="16.0sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20.0dip"
+                        android:src="@drawable/ic_arrow" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/updataBtn"
+                    android:layout_width="fill_parent"
+                    android:layout_marginLeft="2.0dip"
+                    android:layout_marginRight="2.0dip"
+                    android:paddingBottom="16.0dip"
+                    android:paddingTop="16.0dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:drawablePadding="10.0dip"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="17.0dip"
+                        android:text="版本更新"
+                        android:textColor="#ff333333"
+                        android:textSize="16.0sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20.0dip"
+                        android:src="@drawable/ic_arrow" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/helpBtn"
+                    android:layout_width="fill_parent"
+                    android:layout_marginLeft="2.0dip"
+                    android:layout_marginRight="2.0dip"
+                    android:paddingBottom="16.0dip"
+                    android:paddingTop="16.0dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:drawablePadding="10.0dip"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingLeft="17.0dip"
+                        android:text="帮助"
+                        android:textColor="#ff333333"
+                        android:textSize="16.0sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20.0dip"
+                        android:src="@drawable/ic_arrow" />
+                </TableRow>
+
+                <Button
+                    android:id="@+id/logoffBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@color/colorPrimary"
+                    android:text="@string/logoff_btn"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/closeBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@color/colorAttion"
+                    android:text="@string/close_btn"
+                    android:textColor="#ffffff" />
+
+            </TableLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

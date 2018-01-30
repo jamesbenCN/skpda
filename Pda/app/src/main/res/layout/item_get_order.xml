@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_test"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="编码" />
+
+        <TextView
+            android:id="@+id/tv_item_code"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="0000000" />
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="条形码" />
+
+        <TextView
+            android:id="@+id/tv_item_bar_code"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="0000000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="品名" />
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="0000000" />
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="capacity" />
+
+        <TextView
+            android:id="@+id/tv_item_capacity"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="0000000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="stockunit" />
+
+        <TextView
+            android:id="@+id/tv_item_stockunit"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="0000000" />
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="packsize" />
+
+        <TextView
+            android:id="@+id/tv_item_packsize"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="0000000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="rprice" />
+
+        <TextView
+            android:id="@+id/tv_item_rprice"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="0000000" />
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="purprice" />
+
+        <TextView
+            android:id="@+id/tv_item_purprice"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="0000000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="qty" />
+
+        <TextView
+            android:id="@+id/tv_item_qty"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="0000000" />
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="num" />
+
+        <TextView
+            android:id="@+id/tv_item_num"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="0000000" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary" />
+</LinearLayout>
