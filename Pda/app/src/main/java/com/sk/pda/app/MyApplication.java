@@ -3,33 +3,32 @@ package com.sk.pda.app;
 import android.app.Application;
 import android.content.Context;
 
-import com.sk.pda.bean.DeptBean;
-import com.sk.pda.bean.StoreBean;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.log.LoggerInterceptor;
+import com.sk.pda.base.bean.DeptBean;
+import com.sk.pda.base.bean.StoreBean;
+import com.sk.pda.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
 
 /***
  * 整个软件
  */
 public class MyApplication extends Application {
 
-    //登录终端唯一识别码
-    private String terminalId;
-
     //登录用户名
     private String userName;
     //用户码
     private String userCode;
+    //部门列表
+    private List<DeptBean> deptList;
+    //商店列表
+    private List<StoreBean> storeList;
     //当前门店BEAN
     private StoreBean currentStoreBean;
-    private List<DeptBean> deptList;
-    private List<StoreBean> storeList;
+    //登录终端唯一识别码
+    private String terminalId;
+
+
 
     public static Context mContext;
 
@@ -50,16 +49,6 @@ public class MyApplication extends Application {
         return mContext;
     }
 
-    private void initOkhttpClient() {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new LoggerInterceptor("TAG"))
-                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
-                .readTimeout(10000L, TimeUnit.MILLISECONDS)
-                //其他配置
-                .build();
-
-        OkHttpUtils.initClient(okHttpClient);
-    }
 
     public String getUserName() {
         return userName;
@@ -96,6 +85,7 @@ public class MyApplication extends Application {
         this.deptList = deptList;
     }
 
+
     public List<StoreBean> getStoreList() {
         return storeList;
     }
@@ -104,6 +94,7 @@ public class MyApplication extends Application {
         this.storeList = storeList;
     }
 
+
     public String getTerminalId() {
         return terminalId;
     }
@@ -111,4 +102,6 @@ public class MyApplication extends Application {
     public void setTerminalId(String terminalId) {
         this.terminalId = terminalId;
     }
+
+
 }

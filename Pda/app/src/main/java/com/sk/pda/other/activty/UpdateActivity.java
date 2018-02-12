@@ -65,8 +65,7 @@ public class UpdateActivity extends Activity{
             if(msg.arg1 == 100){
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 String path = Environment.getExternalStorageDirectory()+"/AndroidUpdateDemo.apk";
-                intent.setDataAndType(Uri.fromFile(new File(path)),
-                        "application/vnd.android.package-archive");
+                intent.setDataAndType(Uri.fromFile(new File(path)), "application/vnd.android.package-archive");
                 startActivity(intent);
             }
             proBar.setVisibility(View.GONE);

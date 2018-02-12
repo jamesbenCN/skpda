@@ -17,8 +17,8 @@ import android.widget.Toast;
 
 import com.sk.pda.R;
 import com.sk.pda.app.MyApplication;
-import com.sk.pda.base.BaseFragment;
-import com.sk.pda.bean.StoreBean;
+import com.sk.pda.base.fragment.BaseFragment;
+import com.sk.pda.base.bean.StoreBean;
 import com.sk.pda.home.adapter.StoreAdapter;
 import com.sk.pda.home.adapter.UnitAdapter;
 import com.sk.pda.home.popwin.GetFitPopupUtil;
@@ -55,6 +55,7 @@ public class HomeFragment extends BaseFragment {
         tv_userName = view.findViewById(R.id.tv_username);
         tv_storeName = view.findViewById(R.id.tv_storename);
         tv_changStore = view.findViewById(R.id.tv_changeshop);
+
         ll_storeList =view.findViewById(R.id.ll_store_list);
         icon_hide = view.findViewById(R.id.icon_hide);
         icon_update = view.findViewById(R.id.icon_update);

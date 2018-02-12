@@ -32,12 +32,6 @@
             android:paddingTop="10dp"
             android:text="首页" />
 
-        <RadioButton
-            android:id="@+id/rb_message"
-            style="@style/MainButtonStyle"
-            android:drawableTop="@drawable/message_button_selector"
-            android:paddingTop="10dp"
-            android:text="消息" />
 
         <RadioButton
             android:id="@+id/rb_other"

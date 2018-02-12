@@ -1,13 +1,8 @@
 package com.sk.pda.other.fragment;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
@@ -16,7 +11,7 @@ import android.widget.Toast;
 import com.sk.pda.R;
 import com.sk.pda.app.LoginActivity;
 import com.sk.pda.app.MyApplication;
-import com.sk.pda.base.BaseFragment;
+import com.sk.pda.base.fragment.BaseFragment;
 import com.sk.pda.other.activty.HelpActivity;
 import com.sk.pda.other.activty.TestActivity;
 import com.sk.pda.other.activty.TestFuncActivity;

@@ -40,15 +40,23 @@ public class WantOrderListModelDao {
                     "id," +
                     "type," +
                     "order_time," +
+                    "need_time," +
+                    "count," +
+                    "amount," +
                     "is_order," +
-                    "order_db_name" +
-                    ") values (?,?,?,?,?)";
+                    "order_db_name," +
+                    "usercode" +
+                    ") values (?,?,?,?,?,?,?,?,?)";
             db.execSQL(sql1, new Object[]{
                     null,
                     orderListBean.getType(),
                     orderListBean.getOrderTime(),
+                    orderListBean.getNeedTime(),
+                    orderListBean.getCount(),
+                    orderListBean.getAmount(),
                     orderListBean.getIsOrdered(),
-                    orderListBean.getOrderDbName()
+                    orderListBean.getOrderDbName(),
+                    orderListBean.getUsercode()
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,6 +96,7 @@ public class WantOrderListModelDao {
                 orderList.setOrderTime(cursor.getString(cursor.getColumnIndex("order_time")));
                 orderList.setIsOrdered(cursor.getString(cursor.getColumnIndex("is_order")));
                 orderList.setOrderDbName(cursor.getString(cursor.getColumnIndex("order_db_name")));
+                orderList.setUsercode(cursor.getString(cursor.getColumnIndex("usercode")));
             }
             cursor.close();
         } catch (Exception e) {
@@ -112,7 +121,7 @@ public class WantOrderListModelDao {
      * @param type 类型（直送和配送）
      * @return
      */
-    public List<WantOrderListBean> queryData(Context context, String dbName, String type) {
+    public List<WantOrderListBean> queryData(Context context, String dbName, String type,String usercode) {
         SQLiteDatabase db = null;
         Cursor cursor = null;
         List<WantOrderListBean> data = new ArrayList<>();
@@ -124,7 +133,7 @@ public class WantOrderListModelDao {
             //设置为读的数据库
             db = orderListDbHelper.getReadableDatabase();
 
-            cursor = db.query("order_list_info", null, "type=?", new String[]{type}, null, null, null);
+            cursor = db.query("order_list_info", null, "type=? and usercode=?", new String[]{type,usercode}, null, null, null);
 
             //将查询结果复制到返回对象
             if (cursor != null) {
@@ -158,6 +167,30 @@ public class WantOrderListModelDao {
                         bean.setOrderTime("");
                     }
 
+                    //needtime具体赋值
+                    if (cursor.getString(cursor.getColumnIndex("need_time")) != null) {
+                        bean.setNeedTime(cursor.getString(cursor.getColumnIndex("need_time")));
+                        Log.e(TAG, "queryData: " + bean.getNeedTime());
+                    } else {
+                        bean.setNeedTime("");
+                    }
+
+                    //count具体赋值
+                    if (cursor.getString(cursor.getColumnIndex("count")) != null) {
+                        bean.setCount(cursor.getString(cursor.getColumnIndex("count")));
+                        Log.e(TAG, "queryData: " + bean.getCount());
+                    } else {
+                        bean.setCount("");
+                    }
+
+                    //amount具体赋值
+                    if (cursor.getString(cursor.getColumnIndex("amount")) != null) {
+                        bean.setAmount(cursor.getString(cursor.getColumnIndex("amount")));
+                        Log.e(TAG, "queryData: " + bean.getAmount());
+                    } else {
+                        bean.setAmount("");
+                    }
+
                     //isorder具体赋值
                     if (cursor.getString(cursor.getColumnIndex("is_order")) != null) {
                         bean.setIsOrdered(cursor.getString(cursor.getColumnIndex("is_order")));
@@ -172,6 +205,22 @@ public class WantOrderListModelDao {
                         Log.e(TAG, "queryData: " + bean.getOrderDbName());
                     } else {
                         bean.setOrderDbName("");
+                    }
+
+                    //usercode具体赋值
+                    if (cursor.getString(cursor.getColumnIndex("usercode")) != null) {
+                        bean.setUsercode(cursor.getString(cursor.getColumnIndex("usercode")));
+                        Log.e(TAG, "queryData: " + bean.getUsercode());
+                    } else {
+                        bean.setUsercode("");
+                    }
+
+                    //服务器返回的no具体赋值
+                    if (cursor.getString(cursor.getColumnIndex("no")) != null) {
+                        bean.setNo(cursor.getString(cursor.getColumnIndex("no")));
+                        Log.e(TAG, "queryData: " + bean.getNo());
+                    } else {
+                        bean.setNo("");
                     }
 
                     //插入到返回对象
@@ -232,22 +281,108 @@ public class WantOrderListModelDao {
         return updateFlag;
     }
 
+
     /**
-     * 更新订单时间
-     * @param context 容器
-     * @param dbName 数据库名称
-     * @param queryString 要修改的order数据库名字
-     * @param newString 更改后的order_time
-     * @return 更新的数据数量
+     * 更新要货时间
+     * @param context
+     * @param dbName
+     * @param queryString
+     * @param newOrderTime
+     * @return
      */
-    public int updateSingleDataOrderOrderTime(Context context, String dbName, String queryString, String newString) {
+    public int updateSingleDataOrderOrderTime(Context context, String dbName, String queryString, String newOrderTime) {
         SQLiteDatabase db = null;
         int updateFlag;
         WantOrderDbHelper orderDbHelper = new WantOrderDbHelper(context, dbName, null, 1);
         //修改SQL语句
         db = orderDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("order_time",newString);
+        values.put("order_time",newOrderTime);
+        updateFlag =db.update("order_list_info",values,"order_db_name=?",new String[]{queryString});
+        //执行SQL
+        return updateFlag;
+    }
+
+    /**
+     * 更新到货时间
+     * @param context
+     * @param dbName
+     * @param queryString
+     * @param newNeedTime
+     * @return
+     */
+    public int updateSingleDataOrderNeedTime(Context context, String dbName, String queryString, String newNeedTime) {
+        SQLiteDatabase db = null;
+        int updateFlag;
+        WantOrderDbHelper orderDbHelper = new WantOrderDbHelper(context, dbName, null, 1);
+        //修改SQL语句
+        db = orderDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("need_time",newNeedTime);
+        updateFlag =db.update("order_list_info",values,"order_db_name=?",new String[]{queryString});
+        //执行SQL
+        return updateFlag;
+    }
+
+    /**
+     * 更新订单中的总价
+     * @param context
+     * @param dbName
+     * @param queryString
+     * @param newAmount
+     * @return
+     */
+    public int updateSingleDataOrderAmount(Context context, String dbName, String queryString, String newAmount) {
+        SQLiteDatabase db = null;
+        int updateFlag;
+        WantOrderDbHelper orderDbHelper = new WantOrderDbHelper(context, dbName, null, 1);
+        //修改SQL语句
+        db = orderDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("amount",newAmount);
+        updateFlag =db.update("order_list_info",values,"order_db_name=?",new String[]{queryString});
+        //执行SQL
+        return updateFlag;
+    }
+
+
+    /**
+     * 更新订单中的种类
+     * @param context
+     * @param dbName
+     * @param queryString
+     * @param newCount
+     * @return
+     */
+    public int updateSingleDataOrderCount(Context context, String dbName, String queryString, String newCount) {
+        SQLiteDatabase db = null;
+        int updateFlag;
+        WantOrderDbHelper orderDbHelper = new WantOrderDbHelper(context, dbName, null, 1);
+        //修改SQL语句
+        db = orderDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("count",newCount);
+        updateFlag =db.update("order_list_info",values,"order_db_name=?",new String[]{queryString});
+        //执行SQL
+        return updateFlag;
+    }
+
+    /**
+     * 更新服务器返回的单号
+     * @param context
+     * @param dbName
+     * @param queryString
+     * @param newNo
+     * @return
+     */
+    public int updateSingleDataOrderNo(Context context, String dbName, String queryString, String newNo) {
+        SQLiteDatabase db = null;
+        int updateFlag;
+        WantOrderDbHelper orderDbHelper = new WantOrderDbHelper(context, dbName, null, 1);
+        //修改SQL语句
+        db = orderDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("no",newNo);
         updateFlag =db.update("order_list_info",values,"order_db_name=?",new String[]{queryString});
         //执行SQL
         return updateFlag;

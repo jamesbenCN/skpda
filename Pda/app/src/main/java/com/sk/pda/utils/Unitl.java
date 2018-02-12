@@ -212,7 +212,7 @@ public class Unitl {
 
     /**
      * 将2017 12 31 23 11 11格式转化为2017年12月31日23时11分11秒
-     * @param str
+     * @param str 时间转化
      * @return
      */
     public String timeStrCnFormat(String str){
@@ -226,6 +226,11 @@ public class Unitl {
         return result;
     }
 
+    /**
+     * 判断是否全是数字
+     * @param str 字符串
+     * @return 真假
+     */
     public static boolean isNumeric(String str){
         for (int i = 0; i < str.length(); i++){
             System.out.println(str.charAt(i));
@@ -236,6 +241,11 @@ public class Unitl {
         return true;
     }
 
+    /**
+     * 判断是否为整数
+     * @param input 输入字符串
+     * @return 真假
+     */
     public static boolean isInteger(String input){
         Matcher mer = Pattern.compile("^[+-]?[0-9]+$").matcher(input);
         return mer.find();
@@ -244,7 +254,7 @@ public class Unitl {
 
     /**
      * 查看权限详细页面
-     * @param context
+     * @param context 容器
      */
     public static void getAppDetailSettingIntent(Context context) {
         Intent localIntent = new Intent();

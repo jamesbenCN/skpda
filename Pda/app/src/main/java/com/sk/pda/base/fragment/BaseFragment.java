@@ -1,4 +1,4 @@
-package com.sk.pda.base;
+package com.sk.pda.base.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

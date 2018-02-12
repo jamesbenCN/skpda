@@ -6,13 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.sk.pda.R;
 import com.sk.pda.parts.sale.SaleActivity;
-import com.sk.pda.popwinutils.DensityUtils;
-import com.sk.pda.popwinutils.FitPopupWindow;
-import com.sk.pda.popwinutils.ScreenUtils;
+import com.sk.pda.utils.popwinutils.DensityUtils;
+import com.sk.pda.utils.popwinutils.FitPopupWindow;
+import com.sk.pda.utils.popwinutils.ScreenUtils;
 
 
 public class SaleFitPopupUtil {

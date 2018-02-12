@@ -1,7 +1,6 @@
 package com.sk.pda.parts.want.fragment;
 
 
-import android.app.Activity;
 import android.graphics.drawable.PaintDrawable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,8 +18,8 @@ import android.widget.Toast;
 
 import com.sk.pda.R;
 import com.sk.pda.app.MyApplication;
-import com.sk.pda.bean.DeptBean;
-import com.sk.pda.bean.ItemBean;
+import com.sk.pda.base.bean.DeptBean;
+import com.sk.pda.base.bean.ItemBean;
 import com.sk.pda.parts.want.WantGoodsListActivity;
 import com.sk.pda.parts.want.adapter.FirstClassAdapter;
 import com.sk.pda.parts.want.adapter.SecondClassAdapter;
@@ -28,8 +27,8 @@ import com.sk.pda.parts.want.adapter.TypeRightAdapter;
 import com.sk.pda.parts.want.base.BaseFragment;
 import com.sk.pda.parts.want.bean.FirstClassItem;
 import com.sk.pda.parts.want.bean.SecondClassItem;
-import com.sk.pda.parts.want.sql.DeptModelDao;
-import com.sk.pda.parts.want.sql.ItemModelDao;
+import com.sk.pda.base.sql.DeptModelDao;
+import com.sk.pda.base.sql.ItemModelDao;
 import com.sk.pda.utils.ACache;
 import com.sk.pda.utils.ScreenUtils;
 
@@ -47,10 +46,12 @@ public class ItemListFragment extends BaseFragment {
     private String dbName;
 
     private String currentTransType;
+    private String currentOrderDbName;
+
     private int currentLeftPosition = 0;
 
     private List<ItemBean> want_result = new ArrayList<>();
-    ACache acache;
+
 
 
     TextView want_tv_type_choose;
@@ -82,6 +83,7 @@ public class ItemListFragment extends BaseFragment {
     private Animation animIn, animOut;
 
 
+
     @Override
     public View initView() {
         View view = View.inflate(mContext, R.layout.fragment_want_goods_list, null);
@@ -98,15 +100,15 @@ public class ItemListFragment extends BaseFragment {
     @Override
     public void initData() {
 
-        //商品类别，默认选中
-//        currentFatherType = "1";
 
 
         //初始化缓存
-        acache = ACache.get(getActivity(), "main");
         WantGoodsListActivity ac= (WantGoodsListActivity) getActivity();
-       currentTransType= ac.getCurrentTransType();
-        Log.e(TAG, "listfragment中"+currentTransType );
+        currentTransType= ac.getCurrentTransType();
+        currentOrderDbName =ac.getCurrentOrderDbName();
+
+        Log.e("xxxx", "listfragment中类型为"+currentTransType );
+        Log.e("xxxx", "listfragment中ORDER数据库为"+currentOrderDbName );
 
 
         initListener();
@@ -276,7 +278,7 @@ public class ItemListFragment extends BaseFragment {
 //        //设置recycleview动画，解决频闪
         ((DefaultItemAnimator) want_rv_right.getItemAnimator()).setSupportsChangeAnimations(false);
         //解析右边数据
-        TypeRightAdapter rightAdapter = new TypeRightAdapter(getActivity(), want_result, want_rv_right);
+        TypeRightAdapter rightAdapter = new TypeRightAdapter(getActivity(), want_result, want_rv_right,currentOrderDbName);
         want_rv_right.setAdapter(rightAdapter);
 
         //常用分类设置为每行1个
@@ -291,9 +293,15 @@ public class ItemListFragment extends BaseFragment {
     private void getDataFromDb(String groupfmcode) {
         ItemModelDao itemModel = new ItemModelDao();
         want_result.clear();
-        want_result = itemModel.queryData("dept",groupfmcode);
+
+        if(currentTransType.equals("DC")){
+            want_result = itemModel.queryData("deptdc",groupfmcode);
+        }else {
+            want_result = itemModel.queryData("deptds",groupfmcode);
+        }
+
         //解析右边数据
-        TypeRightAdapter rightAdapter = new TypeRightAdapter(getActivity(), want_result, want_rv_right);
+        TypeRightAdapter rightAdapter = new TypeRightAdapter(getActivity(), want_result, want_rv_right,currentOrderDbName);
         want_rv_right.setAdapter(rightAdapter);
     }
 
@@ -303,7 +311,13 @@ public class ItemListFragment extends BaseFragment {
     private void getDefaultDataFromDb() {
         ItemModelDao itemModel = new ItemModelDao();
         want_result.clear();
-        want_result = itemModel.queryData("default","41");
+        //设置默认加载的数据为生鲜
+        if(currentTransType.equals("DC")){
+            want_result = itemModel.queryData("defaultdc","41");
+        }else {
+            want_result = itemModel.queryData("defaultds","41");
+        }
+
     }
 
 

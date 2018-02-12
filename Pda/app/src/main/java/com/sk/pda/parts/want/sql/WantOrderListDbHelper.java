@@ -33,8 +33,13 @@ public class WantOrderListDbHelper extends SQLiteOpenHelper {
                 "id integer primary key AUTOINCREMENT," +
                 "type varchar(20)," +
                 "order_time varchar(20)," +
+                "need_time varchar(20)," +
+                "count varchar(20)," +
+                "amount varchar(20)," +
                 "is_order varchar(20)," +
-                "order_db_name varchar(20)" +
+                "order_db_name varchar(20)," +
+                "usercode varchar(20)," +
+                "no varchar(30)" +
                 ")";
         db.execSQL(sql0);
         Log.e(TAG, "订单列表数据库创建成功" );

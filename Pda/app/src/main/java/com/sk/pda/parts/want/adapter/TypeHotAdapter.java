@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,7 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.sk.pda.R;
-import com.sk.pda.bean.ItemBean;
+import com.sk.pda.base.bean.ItemBean;
 import com.sk.pda.parts.want.sql.WantOrderModelDao;
 import com.sk.pda.utils.ACache;
 import com.sk.pda.utils.Constants;
@@ -48,6 +49,7 @@ public class TypeHotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Boolean isFootView = false;//是否添加了FootView
 
     private final LayoutInflater mLayoutInflater;
+    private String tempdbname;
 
     //两个final int类型表示ViewType的两种类型
     private final int NORMAL_TYPE = 0;
@@ -61,17 +63,13 @@ public class TypeHotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
      * @param mContext            窗体上下文
      * @param ordinaryProductList 普通数据
      */
-    public TypeHotAdapter(Context mContext, List<ItemBean> ordinaryProductList) {
-        this.mContext = mContext;
-        mLayoutInflater = LayoutInflater.from(mContext);
-        productList = ordinaryProductList;
-    }
 
-    public TypeHotAdapter(Context mContext, List<ItemBean> ordinaryProductList, final RecyclerView rvhot) {
+    public TypeHotAdapter(Context mContext, List<ItemBean> ordinaryProductList, final RecyclerView rvhot,String currentOrderDbName) {
         this.mContext = mContext;
         mLayoutInflater = LayoutInflater.from(mContext);
         productList = ordinaryProductList;
         this.rv_hot = rvhot;
+        this.tempdbname = currentOrderDbName;
     }
 
     @Override
@@ -133,12 +131,8 @@ public class TypeHotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private TextView tv_ordinary_price;
         private TextView tv_ordinary_min_num;
 
-        private EditText et_ordinary_num;
-        private TextView tv_ordinary_numAdd;
-        private TextView tv_ordinary_numSub;
         private TextView tv_ordinary_spec;
         private TextView tv_ordinary_unit;
-        private TextView tv_ordinary_addProduct;
         private TextView tv_ordinary_had_add_num;
 
         private CheckBox cb_ordinary_hot;
@@ -157,10 +151,6 @@ public class TypeHotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 tv_ordinary_barcode = itemView.findViewById(R.id.want_tv_right_no);
                 tv_ordinary_id = itemView.findViewById(R.id.want_tv_right_id);
                 tv_ordinary_price = itemView.findViewById(R.id.want_tv_right_price);
-//                et_ordinary_num = itemView.findViewById(R.id.want_et_item_num);
-//                tv_ordinary_numAdd = itemView.findViewById(R.id.want_tv_item_numAdd);
-//                tv_ordinary_numSub = itemView.findViewById(R.id.want_tv_item_numSub);
-//                tv_ordinary_addProduct = itemView.findViewById(R.id.want_tv_item_addProduct);
                 tv_ordinary_min_num = itemView.findViewById(R.id.want_tv_right_min);
                 tv_ordinary_spec = itemView.findViewById(R.id.want_tv_right_spec);
                 tv_ordinary_unit = itemView.findViewById(R.id.want_tv_right_unit);
@@ -194,39 +184,19 @@ public class TypeHotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         });
             }
 
-            itemBean.setChildSelected(false);
             cb_ordinary_hot.setChecked(itemBean.isChildSelected());
 
             //设置名称
             tv_ordinary_itemname.setText(itemBean.getItemname());
             tv_ordinary_barcode.setText(itemBean.getBarcode());
             tv_ordinary_id.setText(itemBean.getItemcode());
-
-            //设置价格
-
-            //动态加载网络上的价格
-            String itemcode = itemBean.getItemcode();
-            String storecode = "";
-            getPriceFormNet(itemBean, itemcode, storecode, tv_ordinary_price);
-
-//            et_ordinary_num.setText(itemBean.getQty());
             tv_ordinary_spec.setText(itemBean.getPacksize());
             tv_ordinary_unit.setText(itemBean.getStockunit());
             tv_ordinary_min_num.setText(itemBean.getMinmpoqty());
-            ////////////////////////
-            //设置EditText打开数字键盘
-//            et_ordinary_num.setInputType(InputType.TYPE_CLASS_NUMBER);//输入类型
-            //可以点击
-//            et_ordinary_num.setFocusableInTouchMode(true);
-            //可以获取焦点
-//            et_ordinary_num.setFocusable(true);
-            //打开后全选编辑栏
-//            et_ordinary_num.setSelectAllOnFocus(true);
 
 
-            /////////////////////////////////////////////
             //设置已添加数量
-            final String tempdbname = aCache.getAsString("currentOrderDbName");
+
             ItemBean findBean = (new WantOrderModelDao()).querySingleData(mContext, tempdbname, itemBean.getItemcode());
 
             if (findBean != null) {
@@ -235,198 +205,17 @@ public class TypeHotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             tv_ordinary_min_num.setText(itemBean.getMinmpoqty());
 
-//            tv_ordinary_numAdd.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int num = Integer.parseInt(et_ordinary_num.getText().toString());
-//                    int newnum = num + Integer.parseInt(itemBean.getMinmpoqty());
-//                    et_ordinary_num.setText(Integer.toString(newnum));
-//                    itemBean.setQty(et_ordinary_num.getText().toString());
-//                }
-//            });
-
-//            tv_ordinary_numSub.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int num = Integer.parseInt(et_ordinary_num.getText().toString());
-//                    if (num > 0) {
-//                        int newnum = num - Integer.parseInt(itemBean.getMinmpoqty());
-//                        et_ordinary_num.setText(Integer.toString(newnum));
-//                        itemBean.setQty(et_ordinary_num.getText().toString());
-//                    }
-//                }
-//            });
-
-            //添加进购物车
-//            tv_ordinary_addProduct.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                    //检查判断
-//                    String number = et_ordinary_num.getText().toString();
-//                    boolean isNum = isInteger(number);
-//
-//                    //判断是否为正整数
-//                    if (!isNum) {
-//                        Toast.makeText(mContext, "添加的值非正整数", Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//
-//                    //判断是否为0
-//                    if (number.equals("0")) {
-//                        Toast.makeText(mContext, "添加的值为0", Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//
-//                    //判断是否大于最小起订量
-//                    if (Integer.parseInt(number) < Integer.parseInt(itemBean.getMinmpoqty())) {
-//                        Toast.makeText(mContext, "小于最小起订量", Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
-//
-//
-//                    //调整为整除
-//                    int num = Integer.parseInt(number);
-//                    int div = Integer.parseInt(itemBean.getMinmpoqty());
-//                    //取余数
-//                    int ali = num % div;
-//                    int newnum = num - ali;
-//
-//                    //如果余数不等于零
-//                    if (ali != 0) {
-//                        //算出整数
-//                        //弹出对话框,提示新数字
-//                        final AlertDialog.Builder toIntegerDialog = new AlertDialog.Builder(mContext, R.style.MyAlertDialogStyle);
-//                        toIntegerDialog.setTitle("提示");
-//                        toIntegerDialog.setMessage("要货的数量不符合系统规则，数量将从" + Integer.toString(num) + "调整为" + Integer.toString(newnum) + "并添加");
-//                        toIntegerDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                //调整EditText中的字符为新的数字
-//                                insertData(newnum, itemBean, position, tv_ordinary_had_add_num);
-//                            }
-//                        });
-//
-//                        toIntegerDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        });
-//                        toIntegerDialog.show();
-//                    } else {
-//                        insertData(num, itemBean, position, tv_ordinary_had_add_num);
-//                    }
-//
-//                }
-//            });
-        }
-
-        private void getPriceFormNet(final ItemBean itemBean, String itemcode, String storecode, TextView tv_price) {
-            new Thread() {
+            cb_ordinary_hot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void run() {
-                    try {
-                        OkHttpUtils
-                                .post()
-                                .addParams("itemcode", itemcode)
-                                .addParams("storecode", storecode)
-                                .url(Constants.BASE_URL_GETPRICE)
-                                .id(100)
-                                .build()
-                                .execute(new StringCallback() {
-                                    @Override
-                                    public void onError(Call call, Exception e, int id) {
-                                        Log.e(TAG, "错误");
-                                        Toast.makeText(mContext, "商品" + itemBean.getItemname() + "价格网络请求错误", Toast.LENGTH_SHORT).show();
-                                    }
-
-                                    @Override
-                                    public void onResponse(String response, int id) {
-                                        //价格
-                                        JSONObject json = JSON.parseObject(response);
-                                        String jsonprice;
-                                        String jsoncode;
-                                        jsoncode = json.getString("code");
-                                        jsonprice = json.getString("price");
-                                        if (jsoncode.equals("200")) {
-                                            itemBean.setPurprice(jsonprice);
-                                            tv_price.setText(jsonprice);
-                                        }
-                                    }
-                                });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    itemBean.setChildSelected(isChecked);
                 }
-            }.start();
+            });
+
         }
 
 
-        private void insertData(int num, final ItemBean itemBean, int position, TextView tv_had_add_num) {
-            //开始执行插入
-            List<ItemBean> itemBeanList = new ArrayList<ItemBean>();
-            ItemBean newitemben = new ItemBean();
-            newitemben = itemBean;
-            newitemben.setQty(Integer.toString(num));
-            final String tempdbname = aCache.getAsString("currentOrderDbName");
-            final ItemBean findBean = (new WantOrderModelDao()).querySingleData(mContext, tempdbname, itemBean.getItemcode());
-            //查看数据库中是否已有这个数据
-            if (findBean.getItemcode() == null) {
-                //如果没有,直接添加
-                itemBeanList.add(newitemben);
-                boolean insertFlag = (new WantOrderModelDao()).insertOrderModelToDb(mContext, tempdbname, itemBeanList);
-                if (insertFlag) {
-                    Toast.makeText(mContext, "添加入了要货推车", Toast.LENGTH_SHORT).show();
-                    notifyItemChanged(position);
 
-                } else {
-                    Toast.makeText(mContext, "添加失败", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                final String addnum = et_ordinary_num.getText().toString();
-                final String newnum = Integer.toString(Integer.parseInt(findBean.getQty()) + Integer.parseInt(addnum));
-                //弹出对话框,提示新数字
-                final AlertDialog.Builder toIntegerDialog = new AlertDialog.Builder(mContext, R.style.MyAlertDialogStyle);
-                toIntegerDialog.setTitle("提示");
-                toIntegerDialog.setMessage("要货推车中已存在该产品" + findBean.getQty() + "件，继续添加为" + newnum + "件或修改为" + addnum);
-                toIntegerDialog.setNegativeButton("添加", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String queryString = itemBean.getItemcode();
-                        int updateFlag = (new WantOrderModelDao()).updateSingleDataNum(mContext, tempdbname, queryString, newnum);
-                        if (updateFlag > 0) {
-                            Toast.makeText(mContext, "添加入了要货推车", Toast.LENGTH_SHORT).show();
-                            notifyItemChanged(position);
-                        } else {
-                            Toast.makeText(mContext, "添加失败", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                toIntegerDialog.setNeutralButton("修改", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String queryString = itemBean.getItemcode();
-                        int updateFlag = (new WantOrderModelDao()).updateSingleDataNum(mContext, tempdbname, queryString, addnum);
-                        if (updateFlag > 0) {
-                            Toast.makeText(mContext, "已修改并添加入要货推车", Toast.LENGTH_SHORT).show();
-                            notifyItemChanged(position);
-                        } else {
-                            Toast.makeText(mContext, "数量修改失败", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                toIntegerDialog.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                toIntegerDialog.show();
-            }
-        }
 
     }
 }

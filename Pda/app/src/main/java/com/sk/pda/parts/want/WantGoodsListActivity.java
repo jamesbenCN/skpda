@@ -29,6 +29,7 @@ public class WantGoodsListActivity extends AppCompatActivity {
     public ItemListFragment listFragment;
     public ItemHotFragment hotTagFragment;
     public String currentTransType;
+    public String currentOrderDbName;
     private LinearLayout icon_broswe_ok;
 
 
@@ -48,7 +49,10 @@ public class WantGoodsListActivity extends AppCompatActivity {
         //获取传过来的参数
         Intent intent = getIntent();
         currentTransType = intent.getStringExtra("currentTransType");
-        Log.e("goodlistactivity", "当前类型为"+currentTransType );
+        currentOrderDbName = intent.getStringExtra("currentOrderDbName");
+        Log.e("xxxx", "建立了" );
+        Log.e("xxxx", "选择页面，当前类型为"+currentTransType);
+        Log.e("xxxx", "选择页面，当前数据库为"+currentOrderDbName);
 
         tv_currentTransType = (TextView) findViewById(R.id.tv_transtype);
         if(currentTransType.equals("DC")){
@@ -56,9 +60,6 @@ public class WantGoodsListActivity extends AppCompatActivity {
         }else {
             tv_currentTransType.setText("直送");
         }
-
-
-
     }
 
     public void initData() {
@@ -126,11 +127,9 @@ public class WantGoodsListActivity extends AppCompatActivity {
 
     private void initFragment() {
         fragmentList = new ArrayList<>();
+
         hotTagFragment = new ItemHotFragment();
         listFragment = new ItemListFragment();
-
-
-
         fragmentList.add(hotTagFragment);
         fragmentList.add(listFragment);
 
@@ -139,5 +138,9 @@ public class WantGoodsListActivity extends AppCompatActivity {
 
     public String getCurrentTransType(){
         return this.currentTransType;
+    }
+
+    public String getCurrentOrderDbName(){
+        return this.currentOrderDbName;
     }
 }

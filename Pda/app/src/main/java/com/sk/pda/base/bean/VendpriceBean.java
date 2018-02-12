@@ -1,4 +1,4 @@
-package com.sk.pda.bean;
+package com.sk.pda.base.bean;
 
 /**
  * Created by Administrator on 2017/12/11.

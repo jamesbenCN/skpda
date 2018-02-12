@@ -12,8 +12,16 @@
         "source": "D:\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\bundles\\debug\\res\\color\\vpi__dark_theme.xml"
     },
     {
+        "merged": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\vpi__light_theme.xml",
+        "source": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\bundles\\debug\\res\\color\\vpi__light_theme.xml"
+    },
+    {
         "merged": "E:\\Androidproject\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\vpi__dark_theme.xml",
         "source": "E:\\Androidproject\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\bundles\\debug\\res\\color\\vpi__dark_theme.xml"
+    },
+    {
+        "merged": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\vpi__dark_theme.xml",
+        "source": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\bundles\\debug\\res\\color\\vpi__dark_theme.xml"
     },
     {
         "merged": "E:\\Androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\vpi__dark_theme.xml",

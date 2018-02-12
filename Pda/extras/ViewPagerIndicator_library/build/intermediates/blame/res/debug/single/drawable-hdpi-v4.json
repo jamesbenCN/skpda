@@ -1,11 +1,19 @@
 [
     {
+        "merged": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\tab.png",
+        "source": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\tab.png"
+    },
+    {
         "merged": "E:\\Androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_selected_holo.9.png",
         "source": "E:\\Androidproject\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\vpi__tab_selected_holo.9.png"
     },
     {
         "merged": "E:\\Androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_unselected_holo.9.png",
         "source": "E:\\Androidproject\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\vpi__tab_unselected_holo.9.png"
+    },
+    {
+        "merged": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_unselected_holo.9.png",
+        "source": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\vpi__tab_unselected_holo.9.png"
     },
     {
         "merged": "E:\\Androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
@@ -24,6 +32,10 @@
         "source": "E:\\Androidproject\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\vpi__tab_unselected_pressed_holo.9.png"
     },
     {
+        "merged": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_selected_holo.9.png",
+        "source": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\vpi__tab_selected_holo.9.png"
+    },
+    {
         "merged": "E:\\Androidproject\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
         "source": "E:\\Androidproject\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\vpi__tab_selected_pressed_holo.9.png"
     },
@@ -36,8 +48,16 @@
         "source": "E:\\Androidproject\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\vpi__tab_unselected_holo.9.png"
     },
     {
+        "merged": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_selected_focused_holo.9.png",
+        "source": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\vpi__tab_selected_focused_holo.9.png"
+    },
+    {
         "merged": "D:\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\community_tab_subscript.png",
         "source": "D:\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\community_tab_subscript.png"
+    },
+    {
+        "merged": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\community_tab_subscript.png",
+        "source": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\community_tab_subscript.png"
     },
     {
         "merged": "D:\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\tab.png",
@@ -54,6 +74,10 @@
     {
         "merged": "E:\\Androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\tab.png",
         "source": "E:\\Androidproject\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\tab.png"
+    },
+    {
+        "merged": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_selected_pressed_holo.9.png",
+        "source": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\vpi__tab_selected_pressed_holo.9.png"
     },
     {
         "merged": "E:\\Androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\community_tab_subscript.png",
@@ -78,6 +102,14 @@
     {
         "merged": "D:\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_selected_holo.9.png",
         "source": "D:\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\vpi__tab_selected_holo.9.png"
+    },
+    {
+        "merged": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_unselected_focused_holo.9.png",
+        "source": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\vpi__tab_unselected_focused_holo.9.png"
+    },
+    {
+        "merged": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_unselected_pressed_holo.9.png",
+        "source": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable-hdpi\\vpi__tab_unselected_pressed_holo.9.png"
     },
     {
         "merged": "E:\\Androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_selected_pressed_holo.9.png",

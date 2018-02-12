@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.sk.pda.R;
+import com.sk.pda.app.MyApplication;
 import com.sk.pda.parts.want.adapter.WantOrderListAdapter;
 import com.sk.pda.parts.want.base.BaseFragment;
 import com.sk.pda.parts.want.bean.WantOrderListBean;
@@ -20,6 +21,7 @@ import java.util.List;
 public class DSListFragment extends BaseFragment {
     String TAG = "ALLfragment";
     RecyclerView want_rv_orderlist;
+    String usercode;
 
 
     @Override
@@ -31,6 +33,9 @@ public class DSListFragment extends BaseFragment {
     }
 
     public void initData() {
+        MyApplication app = (MyApplication) getActivity().getApplication();
+        usercode=app.getUserCode();
+
         List<WantOrderListBean> upData = getData();
         WantOrderListAdapter orderlistAdapter = new WantOrderListAdapter(getActivity(), upData);
         want_rv_orderlist.setAdapter(orderlistAdapter);
@@ -40,7 +45,7 @@ public class DSListFragment extends BaseFragment {
 
     private List<WantOrderListBean> getData() {
         List<WantOrderListBean> data;
-        data = (new WantOrderListModelDao()).queryData(getActivity(), "orderlistdb", "DS");
+        data = (new WantOrderListModelDao()).queryData(getActivity(), "orderlistdb", "DS",usercode);
         return data;
     }
 

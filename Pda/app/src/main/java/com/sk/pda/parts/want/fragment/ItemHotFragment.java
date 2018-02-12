@@ -17,8 +17,8 @@ import com.sk.pda.parts.want.WantGoodsListActivity;
 import com.sk.pda.parts.want.adapter.TypeHotAdapter;
 
 import com.sk.pda.parts.want.base.BaseFragment;
-import com.sk.pda.bean.ItemBean;
-import com.sk.pda.parts.want.sql.ItemModelDao;
+import com.sk.pda.base.bean.ItemBean;
+import com.sk.pda.base.sql.ItemModelDao;
 import com.sk.pda.parts.want.sql.WantOrderModelDao;
 import com.sk.pda.utils.ACache;
 
@@ -32,17 +32,14 @@ public class ItemHotFragment extends BaseFragment {
 
     private RecyclerView want_rv_right;
 
-    private String dbName;
-    private String currentFatherType;
+
     private String currentTransType;
+    private String currentOrderDbName;
     Button bt_select_all;
     Button bt_insert;
 
-    ACache aCache;
-
 
     private List<ItemBean> want_result = new ArrayList<>();
-
 
 
     private FrameLayout fl_list_container;
@@ -50,6 +47,9 @@ public class ItemHotFragment extends BaseFragment {
     private RecyclerView rv_right;
     boolean select_flag;
     TypeHotAdapter hotAdapter;
+
+
+
 
 
     @Override
@@ -69,15 +69,16 @@ public class ItemHotFragment extends BaseFragment {
 
 
         //初始化缓存
-        aCache = ACache.get(getActivity(), "main");
-        WantGoodsListActivity ac= (WantGoodsListActivity) getActivity();
-        currentTransType= ac.getCurrentTransType();
-        Log.e(TAG, "hotfragment中"+currentTransType);
+
+        WantGoodsListActivity ac = (WantGoodsListActivity) getActivity();
+        currentTransType = ac.getCurrentTransType();
+        currentOrderDbName =ac.getCurrentOrderDbName();
+
+        Log.e("xxxx", "hotfragment中类型为"+currentTransType );
+        Log.e("xxxx", "hotfragment中ORDER数据库为"+currentOrderDbName );
 
         //刷新右边数据
-        refreshRightView();
-        //首次加载
-        select_all(want_result);
+        refreshView();
 
         //初始化监听器
         initListener();
@@ -87,7 +88,6 @@ public class ItemHotFragment extends BaseFragment {
 
     /**
      * 初始化监听器
-     *
      */
     private void initListener() {
 
@@ -98,11 +98,15 @@ public class ItemHotFragment extends BaseFragment {
                 if (select_flag) {
                     select_flag = false;
                     bt_select_all.setText("取消全选");
-                    unselect_all(want_result);
+                    for (ItemBean f : want_result) {
+                        f.setChildSelected(true);
+                    }
                 } else {
                     select_flag = true;
                     bt_select_all.setText("全选");
-                    select_all(want_result);
+                    for (ItemBean f : want_result) {
+                        f.setChildSelected(false);
+                    }
                 }
                 hotAdapter.notifyDataSetChanged();
 
@@ -118,29 +122,16 @@ public class ItemHotFragment extends BaseFragment {
     }
 
 
-    private void select_all(List<ItemBean> itemBeanList) {
-        for (ItemBean f : itemBeanList) {
-            f.setChildSelected(true);
-        }
-    }
-
-    private void unselect_all(List<ItemBean> itemBeanList) {
-        for (ItemBean f : itemBeanList) {
-            f.setChildSelected(false);
-        }
-    }
-
-
     /**
      * 刷新右边视图
      */
-    private void refreshRightView() {
+    private void refreshView() {
         //从数据库获取数据
         getDataFromDb();
 //        //设置recycleview动画，解决频闪
         ((DefaultItemAnimator) want_rv_right.getItemAnimator()).setSupportsChangeAnimations(false);
         //解析右边数据
-        hotAdapter = new TypeHotAdapter(getActivity(), want_result, want_rv_right);
+        hotAdapter = new TypeHotAdapter(getActivity(), want_result, want_rv_right,currentOrderDbName);
         want_rv_right.setAdapter(hotAdapter);
 
         //常用分类设置为每行1个
@@ -155,9 +146,11 @@ public class ItemHotFragment extends BaseFragment {
      */
     private void getDataFromDb() {
         ItemModelDao itemModel = new ItemModelDao();
-//        want_result = itemModel.queryData("list",null);
-        want_result=itemModel.queryData("dcishot",null);
-//        want_result=itemModel.queryData("dsishot",null);
+        if (currentTransType.equals("DC")) {
+            want_result = itemModel.queryData("dcishot", null);
+        } else {
+            want_result = itemModel.queryData("dsishot", null);
+        }
     }
 
 
@@ -172,14 +165,14 @@ public class ItemHotFragment extends BaseFragment {
                 selectItemBeanList.add(itemBean);
             }
         }
-        final String tempdbname = aCache.getAsString("currentOrderDbName");
+
 
         for (ItemBean itemBean : selectItemBeanList) {
             List<ItemBean> insertItemBeanList = new ArrayList<ItemBean>();
-            final ItemBean findBean = (new WantOrderModelDao()).querySingleData(mContext, tempdbname, itemBean.getItemcode());
+            final ItemBean findBean = (new WantOrderModelDao()).querySingleData(mContext, currentOrderDbName, itemBean.getItemcode());
             if (findBean.getItemcode() == null) {
                 insertItemBeanList.add(itemBean);
-                boolean insertFlag = (new WantOrderModelDao()).insertOrderModelToDb(mContext, tempdbname, insertItemBeanList);
+                boolean insertFlag = (new WantOrderModelDao()).insertOrderModelToDb(mContext, currentOrderDbName, insertItemBeanList);
                 if (insertFlag) {
                     insertNum++;
                 }

@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
@@ -33,24 +34,22 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.android.barcodescandemo.ScannerInerface;
 import com.sk.pda.R;
-import com.sk.pda.app.LoginActivity;
 import com.sk.pda.app.MyApplication;
-import com.sk.pda.parts.want.adapter.WantOrderAdapter;
+import com.sk.pda.base.bean.ItemBean;
+import com.sk.pda.base.sql.ItemModelDao;
 import com.sk.pda.parts.want.adapter.TypeRightAdapter;
-import com.sk.pda.bean.ItemBean;
+import com.sk.pda.parts.want.adapter.WantOrderAdapter;
 import com.sk.pda.parts.want.bean.PostItemBean;
 import com.sk.pda.parts.want.bean.WantOrderListBean;
-import com.sk.pda.parts.want.sql.ItemModelDao;
+import com.sk.pda.parts.want.event.MyEvent;
 import com.sk.pda.parts.want.sql.WantOrderListModelDao;
 import com.sk.pda.parts.want.sql.WantOrderModelDao;
 import com.sk.pda.utils.ACache;
-import com.sk.pda.utils.CallWebService;
 import com.sk.pda.utils.Constants;
 import com.sk.pda.utils.PopupWindowHelper;
 import com.sk.pda.utils.Unitl;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.greenrobot.eventbus.EventBus;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
 import org.ksoap2.serialization.SoapObject;
@@ -64,9 +63,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Handler;
 
-import okhttp3.Call;
 import zxing.android.CaptureActivity;
 
 
@@ -89,9 +86,9 @@ public class WantNewOrderActivity extends Activity {
     boolean isOpen = false;
 
     ACache acache;
+    String usercode;
 
 
-    private TextView want_tv_currentdb_name;
     private TextView want_tv_trans_type;
 
     private LinearLayout want_ll_find;
@@ -105,6 +102,11 @@ public class WantNewOrderActivity extends Activity {
     private LinearLayout want_ll_search;
     private String currentTransType;
     private String postNeedTime;
+    private TextView want_tv_need_time;
+    private TextView want_tv_amount;
+    private TextView want_tv_count;
+
+
 
     private PopupWindowHelper popupWindowHelper;
     private View popView;
@@ -115,10 +117,12 @@ public class WantNewOrderActivity extends Activity {
 
     private TextView want_tv_close_order_activity;
     private TextView want_tv_submit_order;
-    private TextView want_tv_need_time;
+
 
     private String currentOrderDbName;
     static final private int GET_CODE = 0;
+
+    boolean isFromView = false;
 
     private ProgressDialog mPd;
 
@@ -166,11 +170,15 @@ public class WantNewOrderActivity extends Activity {
 
 
     private void findViews() {
-        want_tv_currentdb_name = findViewById(R.id.want_tv_currentDbname);
-        want_tv_need_time = findViewById(R.id.want_tv_need_time);
 
+        //要货时间
+        want_tv_need_time = findViewById(R.id.want_tv_need_time);
+        //总金额
+        want_tv_amount =findViewById(R.id.want_tv_amount);
+        //要货类型
         want_tv_trans_type = findViewById(R.id.tv_transtype);
-        want_rv_cart = findViewById(R.id.rv_want_new_order);
+        //要货种类
+        want_tv_count = findViewById(R.id.want_tv_count);
 
         //搜索按钮
         want_ll_browse = findViewById(R.id.icon_want_browse);
@@ -180,6 +188,9 @@ public class WantNewOrderActivity extends Activity {
         want_bt_search = findViewById(R.id.bt_want_search);
         want_iv_search_cancel = findViewById(R.id.iv_want_search_cancel);
         want_iv_scan = findViewById(R.id.iv_want_scan);
+
+        //主recyclview
+        want_rv_cart = findViewById(R.id.rv_want_new_order);
 
         //弹窗关闭按钮
         popwindowclose = findViewById(R.id.want_bt_popwindow_close);
@@ -193,9 +204,10 @@ public class WantNewOrderActivity extends Activity {
     }
 
     private void initData() {
+        MyApplication app= (MyApplication) this.getApplication();
+        usercode =app.getUserCode();
 
-        //初始化缓存
-        acache = ACache.get(this, "main");
+
 
         //获取传过来的参数
         Intent intent = getIntent();
@@ -214,7 +226,7 @@ public class WantNewOrderActivity extends Activity {
         if (currentOrderDbName == null) {
             //如果是新建的
             //设置当前数据库名字
-            currentOrderDbName = "order" + date;
+            currentOrderDbName = "wantorder" + date;
             //并插入名字到数据库
             WantOrderListBean orderListBean = new WantOrderListBean();
             orderListBean.setOrderDbName(currentOrderDbName);
@@ -224,22 +236,36 @@ public class WantNewOrderActivity extends Activity {
             } else {
                 orderListBean.setType("DC");
             }
-            orderListBean.setOrderTime("");
-            orderListBean.setNeedTime(want_tv_need_time.getText().toString());
+            orderListBean.setOrderTime(date);
+            orderListBean.setNeedTime(date);
+            orderListBean.setCount("0.0");
+            orderListBean.setAmount("0");
+            orderListBean.setUsercode(usercode);
 
             boolean insetFlag = (new WantOrderListModelDao()).insertOrderModelToDb(this, "orderlistdb", orderListBean);
             if (insetFlag) {
                 //修改并更新当前orderDbName的缓存
-                acache.remove("currentOrderDbName");
-                acache.put("currentOrderDbName", currentOrderDbName);
+                Toast.makeText(WantNewOrderActivity.this, "Orderlist数据库插入成功", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(WantNewOrderActivity.this, "Orderlist数据库插入失败", Toast.LENGTH_SHORT).show();
             }
+            Log.e("xxxx", "新建的订单表为"+currentOrderDbName );
 
         } else {
             currentOrderDbName = intent.getStringExtra("currentOrderDbName");
-            Log.e(TAG, "浏览过来的");
+            isFromView =true;
+            want_tv_submit_order.setBackgroundColor(Color.GRAY);
+            want_tv_submit_order.setEnabled(false);
+            want_tv_submit_order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(WantNewOrderActivity.this,"本订单已提交服务器，请不要重复下单",Toast.LENGTH_SHORT).show();
+                }
+            });
+            Log.e("xxxx", "浏览过来的订单表为"+currentOrderDbName);
         }
+
+
 
         //初始化默认要货时间
         Date date1 = new Date();
@@ -253,8 +279,7 @@ public class WantNewOrderActivity extends Activity {
 
         ///////////////////////////////////////////////////////////////////////////////
 
-        //设置订单名栏的文字
-        want_tv_currentdb_name.setText(currentOrderDbName);
+
         //设置要货模式文字内容
         if (currentTransType.equals("DC")) {
             want_tv_trans_type.setText("配送订单");
@@ -323,10 +348,11 @@ public class WantNewOrderActivity extends Activity {
                     + String.format("%02d", monthOfYear + 1)
                     + String.format("%02d", dayOfMonth);
             want_tv_need_time.setText(needtime);
-//            int needTimeFlag = (new OrderListModelDao()).updateSingleDataOrderOrderTime(NewOrderActivity.this,"orderlistdb",currentOrderDbName,want_tv_need_time.getText().toString());
-//            if(needTimeFlag>0){
-//                Toast.makeText(NewOrderActivity.this, "要货时间修改成功", Toast.LENGTH_SHORT).show();
-//            }
+            //更新数据库中的needtime
+            int needTimeFlag = (new WantOrderListModelDao()).updateSingleDataOrderOrderTime(WantNewOrderActivity.this,"orderlistdb",currentOrderDbName,want_tv_need_time.getText().toString());
+            if(needTimeFlag>0){
+                Toast.makeText(WantNewOrderActivity.this, "要货时间修改成功", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -370,9 +396,6 @@ public class WantNewOrderActivity extends Activity {
 
     }
 
-
-
-
     ////////////////////////////////////////////////////////////////////////////////
 
     private void initListener() {
@@ -389,7 +412,6 @@ public class WantNewOrderActivity extends Activity {
             @Override
             public void onClick(View v) {
                 submitOrder();
-
             }
         });
 
@@ -399,6 +421,7 @@ public class WantNewOrderActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(WantNewOrderActivity.this, WantGoodsListActivity.class);
                 intent.putExtra("currentTransType", currentTransType);
+                intent.putExtra("currentOrderDbName", currentOrderDbName);
                 startActivityForResult(intent, GET_CODE);
             }
         });
@@ -533,8 +556,7 @@ public class WantNewOrderActivity extends Activity {
         if (windowIsOpen) {
             popupWindowHelper.dismiss();
         }
-        //从缓存中取得数据库名字
-        String dbName = acache.getAsString("wantdb");
+
         ItemModelDao itemModel = new ItemModelDao();
 
         boolean isNum = false;
@@ -583,12 +605,18 @@ public class WantNewOrderActivity extends Activity {
      */
     private void refreshCartRv() {
         List<ItemBean> orderlist = new ArrayList<>();
-        Log.e("xxx", "currentOrderDbName " + currentOrderDbName);
+
         orderlist = (new WantOrderModelDao()).queryData(this, currentOrderDbName, "all", null);
-        WantOrderAdapter orderAdapter = new WantOrderAdapter(this, orderlist, currentOrderDbName);
+        WantOrderAdapter orderAdapter = new WantOrderAdapter(this, orderlist, currentOrderDbName,want_tv_amount,want_tv_count);
+
         want_rv_cart.setAdapter(orderAdapter);
+
+
+
         //常用分类设置为每行1个
         GridLayoutManager manager = new GridLayoutManager(this, 1);
+
+
         //并设置布局
         want_rv_cart.setLayoutManager(manager);
         Toast.makeText(WantNewOrderActivity.this, "进行了刷新", Toast.LENGTH_SHORT).show();
@@ -607,7 +635,6 @@ public class WantNewOrderActivity extends Activity {
         List<PostItemBean> postItemBeanList;
         postItemBeanList =new ArrayList<>();
 
-        //// TODO: 2018/1/24 需要修改为部门码
         deptCode =app.getDeptList().get(0).getDeptcode();
         storeCode =app.getCurrentStoreBean().getStorecode();
         persCode =app.getUserCode();
@@ -620,10 +647,12 @@ public class WantNewOrderActivity extends Activity {
             PostItemBean postItemBean=new PostItemBean();
             postItemBean.setItemCode(f.getItemcode());
             postItemBean.setQty(Double.parseDouble(f.getQty()));
+            //设置供应商编码
             if(currentTransType.equals("DC")){
                 postItemBean.setVendCode("0001");
             }else{
-                postItemBean.setVendCode(f.getVendcode());
+                postItemBean.setVendCode("0003");
+//                postItemBean.setVendCode(f.getVendcode());
             }
 
             postItemBeanList.add(postItemBean);
@@ -717,10 +746,19 @@ public class WantNewOrderActivity extends Activity {
         String marketPoNo = dataJson.getString("marketPoNo");
         mPd.cancel();
         if (code.equals("200")) {
-            Log.e(TAG, "marketPoNo: "+marketPoNo );
-            Toast.makeText(WantNewOrderActivity.this,"要货成功,服务器返回单号" + marketPoNo,Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(WantNewOrderActivity.this,"要货失败,服务器返回失败原因" + msg,Toast.LENGTH_SHORT).show();
+           int flag = (new WantOrderListModelDao()).updateSingleDataOrderNo(this,"orderlistdb",currentOrderDbName,marketPoNo);
+            if(flag>0){
+                int flag1 =(new WantOrderListModelDao().updateSingleDataOrderIsOrder(this,"orderlistdb",currentOrderDbName,"1"));
+                if(flag1>0){
+                    Toast.makeText(WantNewOrderActivity.this,"要货成功",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(WantNewOrderActivity.this,"要货失败,更新订单状态失败" + msg,Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                Toast.makeText(WantNewOrderActivity.this,"要货成功,更新服务器返回的编号失败",Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            Toast.makeText(WantNewOrderActivity.this,"要货失败,服务器返回失败原因为：" + msg,Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -774,7 +812,11 @@ public class WantNewOrderActivity extends Activity {
         mFilter = null;
         Control1.close();
         super.onDestroy();
+        updateOrderData();
         checkZeroData();
+        if(isFromView){
+            EventBus.getDefault().post(new MyEvent("isfromview"));
+        }
     }
 
     /**
@@ -797,6 +839,13 @@ public class WantNewOrderActivity extends Activity {
             }
         }
     }
+
+   private void updateOrderData(){
+       String amount =want_tv_amount.getText().toString();
+       String count =want_tv_count.getText().toString();
+       (new WantOrderListModelDao()).updateSingleDataOrderCount(this, "orderlistdb",currentOrderDbName,count);
+       (new WantOrderListModelDao()).updateSingleDataOrderAmount(this, "orderlistdb",currentOrderDbName,amount);
+   }
 
 
     /**

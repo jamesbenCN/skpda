@@ -1,10 +1,10 @@
-package com.sk.pda.parts.want.sql;
+package com.sk.pda.base.sql;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.sk.pda.bean.DeptBean;
+import com.sk.pda.base.bean.DeptBean;
 import com.sk.pda.utils.Constants;
 
 import java.util.ArrayList;
@@ -18,7 +18,8 @@ public class DeptModelDao {
     String TAG = "deptmodeldao";
 
     public List<DeptBean> queryData(String querytype, String queryString) {
-        String dbPath = Constants.ITEMINFO;
+
+        String dbPath = Constants.getLocalDb();
         SQLiteDatabase db = null;
         Cursor cursor;
         List<DeptBean> data = new ArrayList<DeptBean>();
@@ -90,8 +91,13 @@ public class DeptModelDao {
     }
 
 
+    /**
+     * 返回本地部门列表
+     * @param deptBeanList
+     * @return
+     */
     public List<DeptBean> transToLocalDept(List<DeptBean> deptBeanList) {
-        String dbPath = Constants.ITEMINFO;
+        String dbPath = Constants.getLocalDb();
         SQLiteDatabase db = null;
         Cursor cursor = null;
         List<DeptBean> data = new ArrayList<DeptBean>();

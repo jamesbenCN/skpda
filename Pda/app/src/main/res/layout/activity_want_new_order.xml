@@ -9,48 +9,6 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:gravity="center"
-        android:background="@color/colorPrimaryDark">
-        <LinearLayout
-            android:layout_height="match_parent"
-            android:layout_width="wrap_content">
-            <TextView
-            android:layout_height="match_parent"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-            android:textSize="12dp"
-            android:textColor="@color/colorDefault"
-            android:text="手持端订单号" />
-            <TextView
-                android:id="@+id/want_tv_currentDbname"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:textSize="12dp"
-                android:textColor="@color/colorDefault"
-                android:text="1111111111111111" />
-
-            <TextView
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:textSize="12dp"
-                android:textColor="@color/colorDefault"
-                android:text="要货时间" />
-            <TextView
-                android:id="@+id/want_tv_need_time"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:textSize="12dp"
-                android:textColor="@color/colorDefault"
-                android:text="1111111111111111" />
-        </LinearLayout>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_gravity="center"
         android:orientation="horizontal"
@@ -126,6 +84,62 @@
                 android:textColor="@color/colorDefault"
                 android:textSize="12dp" />
         </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@color/colorPrimaryLight">
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textSize="11dp"
+            android:textColor="@color/colorDefault"
+            android:text="点选要货时间：" />
+        <TextView
+        android:id="@+id/want_tv_need_time"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:textSize="11dp"
+        android:textColor="@color/colorDefault"
+        android:text="1111111111111111" />
+
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textSize="11dp"
+            android:textColor="@color/colorDefault"
+            android:text="已选品种：" />
+        <TextView
+            android:id="@+id/want_tv_count"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textSize="11dp"
+            android:textColor="@color/colorDefault"
+            android:text="00" />
+
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textSize="11dp"
+            android:textColor="@color/colorDefault"
+            android:text="总金额：" />
+        <TextView
+            android:id="@+id/want_tv_amount"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textSize="11dp"
+            android:textColor="@color/colorDefault"
+            android:text="00.00" />
 
     </LinearLayout>
 

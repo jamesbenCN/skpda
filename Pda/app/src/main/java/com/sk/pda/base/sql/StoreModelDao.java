@@ -1,10 +1,9 @@
-package com.sk.pda.parts.want.sql;
+package com.sk.pda.base.sql;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import com.sk.pda.bean.StoreBean;
+import com.sk.pda.base.bean.StoreBean;
 import com.sk.pda.utils.Constants;
 
 import java.util.ArrayList;
@@ -18,8 +17,14 @@ public class StoreModelDao {
     String TAG = "storemodeldao";
 
 
+    /**
+     * 返回用户的门店列表
+     * @param storeBeanList
+     * @return
+     */
     public List<StoreBean> transToLocalStore(List<StoreBean> storeBeanList) {
-        String dbPath = Constants.ITEMINFO;
+
+        String dbPath = Constants.getLocalDb();
         SQLiteDatabase db = null;
         Cursor cursor = null;
         List<StoreBean> data = new ArrayList<StoreBean>();

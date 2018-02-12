@@ -8,9 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.sk.pda.R;
-import com.sk.pda.popwinutils.DensityUtils;
-import com.sk.pda.popwinutils.FitPopupWindow;
-import com.sk.pda.popwinutils.ScreenUtils;
+import com.sk.pda.utils.popwinutils.DensityUtils;
+import com.sk.pda.utils.popwinutils.FitPopupWindow;
+import com.sk.pda.utils.popwinutils.ScreenUtils;
 
 
 public class CheckFitPopupUtil {

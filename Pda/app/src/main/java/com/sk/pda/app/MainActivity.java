@@ -9,9 +9,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.sk.pda.R;
-import com.sk.pda.base.BaseFragment;
+import com.sk.pda.base.fragment.BaseFragment;
 import com.sk.pda.home.fragment.HomeFragment;
-import com.sk.pda.message.fragment.MessageFragment;
 import com.sk.pda.other.fragment.OtherFragment;
 
 import java.util.ArrayList;
@@ -21,8 +20,7 @@ public class MainActivity extends FragmentActivity {
 
     FrameLayout frameLayout;
     RadioButton rbHome;
-    RadioButton rbCommunity;
-    RadioButton rbUser;
+    RadioButton rbOther;
     RadioGroup rgMain;
 
     private ArrayList<BaseFragment> fragments;
@@ -42,8 +40,7 @@ public class MainActivity extends FragmentActivity {
     {
         frameLayout = findViewById(R.id.frameLayout);
         rbHome = findViewById(R.id.rb_home);
-        rbCommunity = findViewById(R.id.rb_message);
-        rbUser = findViewById(R.id.rb_other);
+        rbOther = findViewById(R.id.rb_other);
         rgMain = findViewById(R.id.rg_main);
 
     }
@@ -55,7 +52,6 @@ public class MainActivity extends FragmentActivity {
     private void initFragment() {
         fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
-        fragments.add(new MessageFragment());
         fragments.add(new OtherFragment());
     }
 
@@ -70,11 +66,8 @@ public class MainActivity extends FragmentActivity {
                     case R.id.rb_home:
                         position = 0;
                         break;
-                    case R.id.rb_message:
-                        position = 1;
-                        break;
                     case R.id.rb_other:
-                        position = 2;
+                        position = 1;
                         break;
                 }
                 //根据position选中目标显示fragment

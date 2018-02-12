@@ -1,4 +1,4 @@
-package com.sk.pda.parts.want.sql;
+package com.sk.pda.base.sql;
 
 
 import android.database.Cursor;
@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.sk.pda.bean.ItemBean;
+import com.sk.pda.base.bean.ItemBean;
 import com.sk.pda.utils.Constants;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class ItemModelDao {
      * @return 查询结果
      */
     public List<ItemBean> queryData(String querytype, String queryString) {
-        String dbPath = Constants.ITEMINFO;
+        String dbPath = Constants.getLocalDb();
         SQLiteDatabase db = null;
         Cursor cursor;
         List<ItemBean> data = new ArrayList<ItemBean>();
@@ -69,16 +69,27 @@ public class ItemModelDao {
                     cursor = db.query("item", null, null, null, null, null, null);
                     break;
 
-                case "dept":
-                    cursor = db.query("item", null, "groupfmcode=?", new String[]{queryString}, null, null, null);
+                case "deptdc":
+                    cursor = db.query("item", null, "groupfmcode=? and supptype=?", new String[]{queryString,"DC"}, null, null, null);
                     break;
 
-                case "default":
-                    cursor = db.query("item", null, "deptcode=?", new String[]{queryString}, null, null, null);
+                case "deptds":
+                    cursor = db.query("item", null, "groupfmcode=? and supptype=?", new String[]{queryString,"DS"}, null, null, null);
                     break;
+
+
+                case "defaultdc":
+                    cursor = db.query("item", null, "deptcode=? and supptype=?", new String[]{queryString,"DC"}, null, null, null);
+                    break;
+
+                case "defaultds":
+                    cursor = db.query("item", null, "deptcode=? and supptype=?", new String[]{queryString,"DS"}, null, null, null);
+                    break;
+
                 case "dcishot":
-                    cursor = db.query("item", null, "ishot=? & supptype=?", new String[]{"1","DC"}, null, null, null);
+                    cursor = db.query("item", null, "ishot=? and supptype=?", new String[]{"1","DC"}, null, null, null);
                     break;
+
                 case "dsishot":
                     cursor = db.query("item", null, "ishot=? and supptype=?", new String[]{"1","DS"}, null, null, null);
                     break;
@@ -94,11 +105,17 @@ public class ItemModelDao {
                 case "barcode":
                     cursor = db.query("item", null, "barcode =?", new String[]{queryString}, null, null, null);
                     break;
+
+                case "default":
+                    cursor = db.query("item", null, "deptcode=?", new String[]{queryString}, null, null, null);
+                    break;
+
                 default:
                     cursor = db.query("item", null, null, null, null, null, null);
                     Log.e(TAG, "queryData: default");
             }
 
+            Log.e(TAG, "找到数据"+cursor.getCount()+"条" );
 
             //将查询结果复制到返回对象
             if (cursor != null) {
@@ -238,4 +255,5 @@ public class ItemModelDao {
         //返回查询结果数组对象
         return data;
     }
+
 }

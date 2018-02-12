@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sk.pda.R;
+import com.sk.pda.app.MyApplication;
 import com.sk.pda.utils.Constants;
 
 import java.io.File;
@@ -22,23 +24,30 @@ public class DbGetActivity extends Activity {
     ProgressBar progressBar;
     TextView percentTv;
     boolean btnFlag = true;
-    String url = "http://skpda.syspaq.com/test/aaa.zip";
+    String url = "";
+    String localdb ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_db_get);
+        initData();
         findView();
         initListener();
+    }
 
+    private void initData(){
+        url = Constants.getRemoteDb();
+        localdb= Constants.getLocalDb();
+        Log.e("remotedb", url );
+        Log.e("localdb", localdb );
     }
 
     private void findView() {
         downloadBtn = findViewById(R.id.main_btn_down1);
-        exitBtn =findViewById(R.id.bt_exit);
+        exitBtn = findViewById(R.id.bt_exit);
         progressBar = findViewById(R.id.main_progress1);
         percentTv = findViewById(R.id.tv_percent);
-
     }
 
     private void initListener() {
@@ -85,11 +94,8 @@ public class DbGetActivity extends Activity {
 
     private void dbtest(String filename) {
 
-        String oldPath = "data/data/com.sk.pda/files/" + filename;
-        String newPath = Constants.ITEMINFO;
-
         //校验
-        SQLiteDatabase db = SQLiteDatabase.openDatabase(oldPath, null, SQLiteDatabase.OPEN_READONLY);
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(localdb, null, SQLiteDatabase.OPEN_READONLY);
         Cursor cur = db.query("vend", null, null, null, null, null, null);
         String curCunt = Integer.toString(cur.getCount());
         cur.close();
@@ -109,12 +115,7 @@ public class DbGetActivity extends Activity {
         db.close();
 
         if (Integer.parseInt(curCunt) > 0) {
-            File delfile = new File(newPath);
-            if (delfile.isFile() && delfile.exists()) {
-                delfile.delete();
-            }
-            File newfile = new File(oldPath);
-            newfile.renameTo(new File(newPath));
+
 
             Toast.makeText(DbGetActivity.this, "数据库更新结束" +
                             "vend共" + curCunt + "条" +

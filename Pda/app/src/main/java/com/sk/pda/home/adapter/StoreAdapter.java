@@ -1,6 +1,5 @@
 package com.sk.pda.home.adapter;
 
-import android.app.Application;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,17 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sk.pda.R;
-import com.sk.pda.bean.StoreBean;
+import com.sk.pda.base.bean.StoreBean;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2017/12/21.
- */
 
+
+/**
+ * 商店列表的适配器
+ */
 public class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;

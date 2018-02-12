@@ -19,16 +19,13 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import com.sk.pda.R;
-import com.sk.pda.bean.DeptBean;
-import com.sk.pda.bean.StoreBean;
+import com.sk.pda.base.bean.DeptBean;
+import com.sk.pda.base.bean.StoreBean;
 import com.sk.pda.other.downdb.DbGetActivity;
-import com.sk.pda.parts.want.sql.DeptModelDao;
-import com.sk.pda.parts.want.sql.StoreModelDao;
+import com.sk.pda.base.sql.DeptModelDao;
+import com.sk.pda.base.sql.StoreModelDao;
 import com.sk.pda.utils.Constants;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
@@ -42,8 +39,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import okhttp3.Call;
 
 public class LoginActivity extends Activity {
 
@@ -186,7 +181,6 @@ public class LoginActivity extends Activity {
                     handler.sendMessage(msg);
 
 
-
                 } catch (SoapFault e) {
                     e.printStackTrace();
                     handler.sendEmptyMessage(0x001);
@@ -260,24 +254,41 @@ public class LoginActivity extends Activity {
         app.setUserName(username);
         app.setTerminalId(terminalId());
 
-        //模拟部门数据
-        List<DeptBean> deptBeanList = new ArrayList<DeptBean>();
-        deptBeanList = JSON.parseArray(deptjson, DeptBean.class);
-        Log.e("网上找到部门数量", "共有: "+deptBeanList.size() );
-        List<DeptBean> localDeptBeanList = (new DeptModelDao()).transToLocalDept(deptBeanList);
-        Log.e("部门数量", "共有: "+localDeptBeanList.size() );
-        //添加部门模拟数据
-        app.setDeptList(localDeptBeanList);
-
-        //模拟门店数据
+        //获取门店数据
         List<StoreBean> storeBeanList = new ArrayList<StoreBean>();
         storeBeanList = JSON.parseArray(storejson, StoreBean.class);
         Log.e("网上找到门店数量", "共有" + storeBeanList.size() + "条数据");
-        List<StoreBean> localStoreBeanList =(new StoreModelDao()).transToLocalStore(storeBeanList);
-        //添加门店模拟数据
-        app.setStoreList(localStoreBeanList);
 
-        File findDb = new File(Constants.ITEMINFO);
+        //设置本地通配数据库地址
+        Constants.setLocalDb(Constants.LOCAL_DB_PATH + storeBeanList.get(0).getStorecode() + ".zip");
+        //设置本地通配数据库地址
+        Constants.setRemoteDb(Constants.REMOTE_DB_PATH + storeBeanList.get(0).getStorecode() + ".zip");
+
+        //检查本地是否有该门店的通用数据库，如果没有，打开下载窗口
+        File findDb = new File(Constants.getLocalDb());
+        if(!findDb.exists()){
+            startActivity(new Intent(LoginActivity.this,DbGetActivity.class));
+            return;
+        }
+
+
+        List<StoreBean> localStoreBeanList = (new StoreModelDao()).transToLocalStore(storeBeanList);
+        //添加门店数据
+        app.setStoreList(localStoreBeanList);
+        //设置默认门店
+        app.setCurrentStoreBean(app.getStoreList().get(0));
+
+
+
+        //获取部门数据
+        List<DeptBean> deptBeanList = new ArrayList<DeptBean>();
+        deptBeanList = JSON.parseArray(deptjson, DeptBean.class);
+        Log.e("网上找到部门数量", "共有: " + deptBeanList.size());
+        List<DeptBean> localDeptBeanList = (new DeptModelDao()).transToLocalDept(deptBeanList);
+        Log.e("部门数量", "共有: " + localDeptBeanList.size());
+        //添加部门数据
+        app.setDeptList(localDeptBeanList);
+
         if (findDb.exists()) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
@@ -290,7 +301,6 @@ public class LoginActivity extends Activity {
         }
     }
 
-
     /**
      * 登录失败后处理
      */
@@ -298,14 +308,6 @@ public class LoginActivity extends Activity {
         Toast.makeText(LoginActivity.this, "账户或密码错误", Toast.LENGTH_SHORT).show();
         bt_login.setEnabled(true);
     }
-
-    public ArrayList<DeptBean> deptJSONStrToBeanList(String deptJSONStr) {
-        ArrayList<DeptBean> deptlist = new ArrayList<>();
-        deptlist = JSON.parseObject(deptJSONStr, new TypeReference<ArrayList<DeptBean>>() {
-        });
-        return deptlist;
-    }
-
 
     /**
      * 获取终端识别码

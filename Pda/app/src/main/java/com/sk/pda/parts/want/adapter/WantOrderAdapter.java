@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sk.pda.R;
-import com.sk.pda.bean.ItemBean;
+import com.sk.pda.base.bean.ItemBean;
 import com.sk.pda.parts.want.sql.WantOrderModelDao;
 import com.sk.pda.utils.ACache;
 
@@ -32,6 +32,8 @@ public class WantOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private List<ItemBean> orderList;
     private final LayoutInflater mLayoutInflater;
     private String dbname;
+    private TextView amount;
+    private TextView count;
 
     /**
      * 继承父类构造函数
@@ -39,13 +41,17 @@ public class WantOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
      * @param mContext      窗体上下文
      * @param orderBeanList 普通数据
      */
-    public WantOrderAdapter(Context mContext, List<ItemBean> orderBeanList, String dbName) {
+    public WantOrderAdapter(Context mContext, List<ItemBean> orderBeanList, String dbName,TextView amount,TextView count) {
         this.mContext = mContext;
         this.dbname = dbName;
+        this.amount =amount;
+        this.count = count;
         mLayoutInflater = LayoutInflater.from(mContext);
         orderList = orderBeanList;
-
+        refreshAmountCount();
     }
+
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -80,7 +86,7 @@ public class WantOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView tv_oridinary_unit;
         private TextView tv_ordinary_confirmProduct;
         private TextView tv_ordinary_delProduct;
-        ACache aCache;
+
 
 
         public OrderViewHolder(View itemView, final Context mContext) {
@@ -103,7 +109,7 @@ public class WantOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         public void setData(final ItemBean orderBean, final int position) {
-            aCache = ACache.get(mContext, "main");
+
             //加载图片
 //            Glide.with(mContext)
 //                    .load(Constants.BASE_URl_IMAGE + orderBean.getFigure())
@@ -176,6 +182,8 @@ public class WantOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     String queryString = orderBean.getItemcode();
                     int updataFlag = (new WantOrderModelDao()).updateSingleDataNum(mContext, dbname, queryString, newnum);
                     if (updataFlag > 0) {
+                        //刷新
+                        refreshAmountCount();
                         Toast.makeText(mContext, "修改成功", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(mContext, "修改失败", Toast.LENGTH_SHORT).show();
@@ -213,6 +221,8 @@ public class WantOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                                 //删除动画
                                 notifyItemRemoved(position);
                                 notifyDataSetChanged();
+                                //刷新总数和数量
+                                refreshAmountCount();
                                 Toast.makeText(mContext, "删除成功", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -227,6 +237,28 @@ public class WantOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             // 显示
             mDialog.show();
         }
+    }
+
+    /**
+     * 刷新fragment中的总数和总价
+     */
+    private void refreshAmountCount(){
+        amount.setText(Double.toString(getamount()));
+        count.setText(Integer.toString(orderList.size()));
+    }
+
+
+    /**
+     * 获取总价格
+     */
+    private double getamount(){
+        double amount=0;
+        if (orderList!= null && orderList.size() > 0){
+            for(ItemBean f: orderList){
+                amount =amount+Double.parseDouble(f.getPurprice())*Double.parseDouble(f.getQty());
+            }
+        }
+        return amount;
     }
 
 

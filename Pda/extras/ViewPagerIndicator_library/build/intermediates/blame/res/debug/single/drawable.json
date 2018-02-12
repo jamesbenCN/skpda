@@ -4,6 +4,14 @@
         "source": "E:\\Androidproject\\androidproject\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable\\vpi_text_tab_indicator.xml"
     },
     {
+        "merged": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable\\vpi__tab_indicator.xml",
+        "source": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable\\vpi__tab_indicator.xml"
+    },
+    {
+        "merged": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable\\vpi_text_tab_indicator.xml",
+        "source": "D:\\androidproject\\skpda\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable\\vpi_text_tab_indicator.xml"
+    },
+    {
         "merged": "E:\\Androidproject\\Pda\\extras\\ViewPagerIndicator_library\\build\\intermediates\\res\\merged\\debug\\drawable\\vpi_text_tab_indicator.xml",
         "source": "E:\\Androidproject\\Pda\\extras\\ViewPagerIndicator_library\\src\\main\\res\\drawable\\vpi_text_tab_indicator.xml"
     },

@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.sk.pda.R;
-import com.sk.pda.bean.ItemBean;
+import com.sk.pda.base.bean.ItemBean;
 import com.sk.pda.parts.want.sql.WantOrderModelDao;
 import com.sk.pda.utils.ACache;
 import com.sk.pda.utils.Constants;
@@ -42,6 +42,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private List<ItemBean> productList;
     private int max_count = 20;//最大显示数
     private Boolean isFootView = false;//是否添加了FootView
+    private String tempdbname;
 
     private final LayoutInflater mLayoutInflater;
 
@@ -57,11 +58,12 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
      * @param mContext            窗体上下文
      * @param ordinaryProductList 普通数据
      */
-    public TypeRightAdapter(Context mContext, List<ItemBean> ordinaryProductList, final RecyclerView rvright) {
+    public TypeRightAdapter(Context mContext, List<ItemBean> ordinaryProductList, final RecyclerView rvright,String currentOrderDbName) {
         this.mContext = mContext;
         mLayoutInflater = LayoutInflater.from(mContext);
         productList = ordinaryProductList;
         this.rv_right = rvright;
+        this.tempdbname = currentOrderDbName;
     }
 
     public TypeRightAdapter(Context mContext, List<ItemBean> ordinaryProductList) {
@@ -220,14 +222,6 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             tv_ordinary_rprice.setText(itemBean.getDoubleRprice());
 
 
-            //// TODO: 2018/1/23 从网上拉取价格    1of2  start
-            //动态加载网络上的价格
-//            String itemcode = itemBean.getItemcode();
-//            String storecode = "";
-//            getPriceFormNet(itemBean, itemcode, storecode, tv_ordinary_purprice);
-            //// TODO: 2018/1/23   从网上拉取价格 1of2 end
-
-
             //已添加数量
             et_ordinary_num.setText(itemBean.getQty());
 
@@ -248,7 +242,6 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             /////////////////////////////////////////////
             //设置已添加数量
-            final String tempdbname = aCache.getAsString("currentOrderDbName");
             ItemBean findBean = (new WantOrderModelDao()).querySingleData(mContext, tempdbname, itemBean.getItemcode());
 
             if (findBean.getItemname() != null) {
@@ -376,46 +369,6 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             });
         }
 
-        //// TODO: 2018/1/23 从网上拉取价格2/2
-//        private void getPriceFormNet(final ItemBean itemBean, String itemcode, String storecode, TextView tv_price) {
-//            new Thread() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        OkHttpUtils
-//                                .post()
-//                                .addParams("itemcode", itemcode)
-//                                .addParams("storecode", storecode)
-//                                .url(Constants.BASE_URL_GETPRICE)
-//                                .id(100)
-//                                .build()
-//                                .execute(new StringCallback() {
-//                                    @Override
-//                                    public void onError(Call call, Exception e, int id) {
-//                                        Log.e(TAG, "错误");
-//                                        Toast.makeText(mContext, "网络请求错误", Toast.LENGTH_SHORT).show();
-//                                    }
-//
-//                                    @Override
-//                                    public void onResponse(String response, int id) {
-//                                        //价格
-//                                        JSONObject json = JSON.parseObject(response);
-//                                        String jsonprice;
-//                                        String jsoncode;
-//                                        jsoncode = json.getString("code");
-//                                        jsonprice = json.getString("price");
-//                                        if (jsoncode.equals("200")) {
-//                                            itemBean.setPurprice(jsonprice);
-//                                            tv_price.setText(jsonprice);
-//                                        }
-//                                    }
-//                                });
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }.start();
-//        }
 
 
         private void insertData(int num, final ItemBean itemBean, int position, TextView tv_had_add_num) {
@@ -424,7 +377,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ItemBean newitemben = new ItemBean();
             newitemben = itemBean;
             newitemben.setQty(Integer.toString(num));
-            final String tempdbname = aCache.getAsString("currentOrderDbName");
+
             final ItemBean findBean = (new WantOrderModelDao()).querySingleData(mContext, tempdbname, itemBean.getItemcode());
             //查看数据库中是否已有这个数据
             if (findBean.getItemcode() == null) {

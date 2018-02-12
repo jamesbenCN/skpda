@@ -61,6 +61,10 @@ public class WantOrderListAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView tv_order_db_name;
         private TextView tv_order_look;
         private TextView tv_order_del;
+        private TextView tv_order_no_label;
+        private TextView tv_order_no;
+        private TextView tv_order_count;
+        private TextView tv_order_amount;
 
         public OrderlistViewHolder(View itemView, final Context mContext) {
             super(itemView);
@@ -69,18 +73,31 @@ public class WantOrderListAdapter extends RecyclerView.Adapter<RecyclerView.View
             tv_need_time = itemView.findViewById(R.id.item_want_order_need_time);
             tv_is_ordered = itemView.findViewById(R.id.item_want_order_is_order);
             tv_order_db_name = itemView.findViewById(R.id.item_want_order_db_name);
+            tv_order_no_label = itemView.findViewById(R.id.item_want_order_no_label);
+            tv_order_no = itemView.findViewById(R.id.item_want_order_no);
+            tv_order_count = itemView.findViewById(R.id.item_want_order_count);
+            tv_order_amount = itemView.findViewById(R.id.item_want_order_amount);
             tv_order_look = itemView.findViewById(R.id.item_want_order_look);
             tv_order_del = itemView.findViewById(R.id.item_want_order_del);
         }
+
+
 
         public void setData(final WantOrderListBean orderListBean, final int position) {
             tv_order_time.setText(orderListBean.getOrderTime());
             tv_need_time.setText(orderListBean.getNeedTime());
             if (orderListBean.getIsOrdered().toString().equals("1")) {
-                tv_is_ordered.setText("已经要货");
+                tv_is_ordered.setText("已定货");
+                tv_order_no_label.setVisibility(View.VISIBLE);
+                tv_order_no.setVisibility(View.VISIBLE);
+                tv_order_no.setText(orderListBean.getNo());
             } else {
                 tv_is_ordered.setText("暂存");
             }
+
+            tv_order_count.setText(orderListBean.getCount());
+
+            tv_order_amount.setText(orderListBean.getAmount());
 
             tv_order_db_name.setText(orderListBean.getOrderDbName());
 

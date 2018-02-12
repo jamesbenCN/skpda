@@ -16,7 +16,9 @@ import com.sk.pda.R;
 import java.util.ArrayList;
 
 
-
+/**
+ * 模块的适配器
+ */
 public class UnitAdapter extends BaseAdapter {
     private ArrayList<String> mNameList = new ArrayList<String>();
     private ArrayList<Drawable> mDrawableList = new ArrayList<Drawable>();
